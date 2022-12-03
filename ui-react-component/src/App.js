@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import ComboBox from "./components/ComboBox.tsx";
 
 function App() {
+  const comboItems = [
+    {
+      checked: false,
+      label: '항목1'
+    },
+    {
+      checked: false,
+      label: '항목2'
+    },
+    {
+      checked: true,
+      label: '항목3'
+    }
+  ]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ComboBox comboItems={comboItems}></ComboBox>
     </div>
   );
 }
