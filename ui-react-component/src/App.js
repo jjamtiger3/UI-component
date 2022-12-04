@@ -3,21 +3,20 @@ import ComboBox from "./components/ComboBox.tsx";
 function App() {
   const comboItems = [
     {
-      checked: false,
       label: '항목1'
     },
     {
-      checked: false,
       label: '항목2'
     },
     {
-      checked: true,
       label: '항목3'
     }
-  ]
+  ];
+  const label = '선택';
+
   return (
     <div>
-      <ComboBox comboItems={comboItems}></ComboBox>
+      <ComboBox label={label} comboItems={comboItems}></ComboBox>
     </div>
   );
 }

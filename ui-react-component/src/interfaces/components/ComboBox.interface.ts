@@ -1,5 +1,6 @@
 import { IComboItem } from "./ComboItem.interface";
 
 export type IComboBox = {
-    comboItems: IComboItem[];
+    label?: string;
+    comboItems?: IComboItem[];
 }
