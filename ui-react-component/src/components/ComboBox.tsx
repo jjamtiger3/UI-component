@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { IComboBox } from '../interfaces/components/ComboBox.interface'
-import commonStyles from '../styles/Common.module.css'
+import { IComboItem } from '../interfaces/components/ComboItem.interface';
 import comboStyles from '../styles/components/ComboBox.module.css'
 
 
-const ComboBox: React.FC<IComboBox> = function (props: IComboBox) {
+const ComboBox: React.FC<IComboBox> = function (props: any) {
     const [isOpen, setIsOpen] = useState(false);
     const [items, setItems] = useState(props.comboItems || []);
     const [label, setLabel] = useState('선택');
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState<Array<{ comboItem: IComboItem }> >([]);
 
     function handleChecked (checked: boolean, index: number) {
         items[index].checked = checked;
@@ -20,32 +20,30 @@ const ComboBox: React.FC<IComboBox> = function (props: IComboBox) {
     }
 
     function selectItem(item) {
-        console.log(item);
         setLabel(item.label);
+        setIsOpen(false);
+        props.getSelectedItems && props.getSelectedItems(item);
+    }
+    function handleOuterClick() {
+        setIsOpen(false);
     }
     return (
-        <div className={comboStyles.container}>
-            <div className={comboStyles['combo-outer']}></div>
-            <div className={`${comboStyles['combo-wrapper']}`} onClick={toggle}>
-                <span className={comboStyles.label}>
-                    { label }
-                </span>
+        <div className={`${comboStyles['combobox-container']} ${{...props}}`} style={props.styles}>
+            <div className={comboStyles['label-wrapper']} onClick={toggle}>
+                <span>{label}</span>
+                <span className={`${comboStyles.icon} ${comboStyles['arrow-down']}`}></span>
+            </div>
+            <div className={`${comboStyles.dropdown} ${isOpen ? comboStyles.open : ''}`}>
+                <div className={comboStyles['combo-outer']} onClick={handleOuterClick}></div>
+                <div className={comboStyles['combo-item-wrapper']}>
                 {
-
-                    isOpen && 
-                        <div className={comboStyles['combo-inner']}>
-                            {
-                                items.map((item, index) => {
-                                    return (
-                                        <div key={index} onClick={() => selectItem(item)}>
-                                            {/* <input type={'checkbox'} checked={item.checked} onChange={() => handleChecked(!item.checked, index)}></input> */}
-                                            <label>{item.label}</label>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+                    items.map((item, index) => {
+                        return (
+                            <div className={comboStyles['combo-item']} key={index} onClick={() => selectItem(item)}>{item.label}</div>
+                        )
+                    })
                 }
+                </div>
             </div>
         </div>
     )

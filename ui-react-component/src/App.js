@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div>
-      <ComboBox label={label} comboItems={comboItems}></ComboBox>
+      <ComboBox label={label} comboItems={comboItems} getSelectedItems={(item) => console.log(item)}></ComboBox>
     </div>
   );
 }
