@@ -12,7 +12,6 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
 
     function handleChecked (checked: boolean, index: number) {
         items[index].checked = checked;
-        console.log(items);
         setItems([...items]);
     }
     function toggle () {
@@ -20,9 +19,14 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
     }
 
     function selectItem(item) {
-        setLabel(item.label);
-        setIsOpen(false);
-        props.getSelectedItems && props.getSelectedItems(item);
+        if (!props.multiSelect) {
+            setLabel(item.label);
+            setIsOpen(false);
+        } else {
+            console.log(item)
+            // setLabel(_items.filter((item) => item.checked).join(','));
+        }
+        props.getSelectedItems && props.getSelectedItems(items.filter((item) => item.checked));
     }
     function handleOuterClick() {
         setIsOpen(false);
@@ -35,15 +39,18 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
             </div>
             <div className={`${comboStyles.dropdown} ${isOpen ? comboStyles.open : ''}`}>
                 <div className={comboStyles['combo-outer']} onClick={handleOuterClick}></div>
-                <div className={comboStyles['combo-item-wrapper']}>
+                <ul className={comboStyles['combo-item-wrapper']}>
                 {
                     items.map((item, index) => {
                         return (
-                            <div className={comboStyles['combo-item']} key={index} onClick={() => selectItem(item)}>{item.label}</div>
+                            // TODO html FOR
+                            <li className={comboStyles['combo-item']} key={index} onClick={() => selectItem(item)}>
+                                {props.multiSelect ? (<><input type="checkbox"></input><span>{item.label}</span></>) : <span>{item.label}</span>}
+                            </li>
                         )
                     })
                 }
-                </div>
+                </ul>
             </div>
         </div>
     )

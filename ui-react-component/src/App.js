@@ -16,7 +16,10 @@ function App() {
 
   return (
     <div>
-      <ComboBox label={label} comboItems={comboItems} getSelectedItems={(item) => console.log(item)}></ComboBox>
+      <ComboBox label={label} 
+        comboItems={comboItems} 
+        multiSelect={true}
+        getSelectedItems={(item) => console.log(item)}></ComboBox>
     </div>
   );
 }
