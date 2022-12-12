@@ -1,3 +1,4 @@
+import Button from "./components/Button.tsx";
 import ComboBox from "./components/ComboBox.tsx";
 
 function App() {
@@ -14,11 +15,16 @@ function App() {
   ];
   const label = '선택';
 
+  function handleClick() {
+    console.log('click');
+  }
+
   return (
     <div>
       <ComboBox label={label} 
         comboItems={comboItems} 
         getSelectedItem={(item) => console.log(item)}></ComboBox>
+      <Button label="버튼" onClick={handleClick}></Button>
     </div>
   );
 }
