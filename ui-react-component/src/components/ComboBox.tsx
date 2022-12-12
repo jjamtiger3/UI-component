@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { IComboBox } from '../interfaces/components/ComboBox.interface'
 import { IComboItem } from '../interfaces/components/ComboItem.interface';
 import comboStyles from '../styles/components/ComboBox.module.css'
@@ -8,25 +8,20 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
     const [isOpen, setIsOpen] = useState(false);
     const [items, setItems] = useState(props.comboItems || []);
     const [label, setLabel] = useState('선택');
-    const [selectedItems, setSelectedItems] = useState<Array<{ comboItem: IComboItem }> >([]);
+    const [selectedItem, setSelectedItem] = useState<IComboItem>({label: '선택'});
 
-    function handleChecked (checked: boolean, index: number) {
-        items[index].checked = checked;
-        setItems([...items]);
-    }
+    useEffect(() => {
+        setLabel(selectedItem.label);
+        setIsOpen(false);
+    }, [selectedItem]);
+
     function toggle () {
         setIsOpen(!isOpen);
     }
 
     function selectItem(item) {
-        if (!props.multiSelect) {
-            setLabel(item.label);
-            setIsOpen(false);
-        } else {
-            console.log(item)
-            // setLabel(_items.filter((item) => item.checked).join(','));
-        }
-        props.getSelectedItems && props.getSelectedItems(items.filter((item) => item.checked));
+        setSelectedItem(item);
+        props.getSelectedItem && props.getSelectedItem(item);
     }
     function handleOuterClick() {
         setIsOpen(false);
@@ -43,9 +38,8 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
                 {
                     items.map((item, index) => {
                         return (
-                            // TODO html FOR
                             <li className={comboStyles['combo-item']} key={index} onClick={() => selectItem(item)}>
-                                {props.multiSelect ? (<><input type="checkbox"></input><span>{item.label}</span></>) : <span>{item.label}</span>}
+                                <span>{item.label}</span>
                             </li>
                         )
                     })

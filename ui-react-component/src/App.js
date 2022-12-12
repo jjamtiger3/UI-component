@@ -18,8 +18,7 @@ function App() {
     <div>
       <ComboBox label={label} 
         comboItems={comboItems} 
-        multiSelect={true}
-        getSelectedItems={(item) => console.log(item)}></ComboBox>
+        getSelectedItem={(item) => console.log(item)}></ComboBox>
     </div>
   );
 }
