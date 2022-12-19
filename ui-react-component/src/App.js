@@ -22,7 +22,9 @@ function App() {
   return (
     <div>
       <ComboBox label={label} 
+        styles={{width: '200px'}}
         comboItems={comboItems} 
+        defaultLabel="선택"
         getSelectedItem={(item) => console.log(item)}></ComboBox>
       <Button label="버튼" onClick={handleClick}></Button>
     </div>

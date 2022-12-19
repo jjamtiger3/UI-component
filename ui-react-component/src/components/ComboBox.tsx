@@ -23,11 +23,17 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
         setSelectedItem(item);
         props.getSelectedItem && props.getSelectedItem(item);
     }
+
+    function clearSelect() {
+        setSelectedItem({label: '선택'});
+        props.getSelectedItem && props.getSelectedItem(null);
+    }
+
     function handleOuterClick() {
         setIsOpen(false);
     }
     return (
-        <div className={`${comboStyles['combobox-container']} ${{...props}}`} style={props.styles}>
+        <div className={`${comboStyles['combobox-container']} ${{...props.className}}`} style={props.styles}>
             <div className={comboStyles['label-wrapper']} onClick={toggle}>
                 <span>{label}</span>
                 <span className={`${comboStyles.icon} ${comboStyles['arrow-down']}`}></span>
@@ -35,6 +41,12 @@ const ComboBox: React.FC<IComboBox> = function (props: any) {
             <div className={`${comboStyles.dropdown} ${isOpen ? comboStyles.open : ''}`}>
                 <div className={comboStyles['combo-outer']} onClick={handleOuterClick}></div>
                 <ul className={comboStyles['combo-item-wrapper']}>
+                    {
+                        props.defaultLabel && 
+                            <li className={comboStyles['combo-item']} onClick={() => clearSelect()}>
+                                <span>{props.defaultLabel}</span>
+                            </li>
+                    }
                 {
                     items.map((item, index) => {
                         return (

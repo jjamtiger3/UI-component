@@ -2,6 +2,7 @@
     width: 140px;
     background-color: #fff;
     display: inline-block;
+    position: relative;
 }
 
 .label-wrapper {
@@ -26,6 +27,9 @@
     padding: 0;
     margin: 0;
     list-style: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
 }
 
 .combo-outer {
@@ -41,11 +45,8 @@
 
 .dropdown.open {
     display: block;
-    z-index: 1;
 }
 .dropdown .combo-item-wrapper {
-    position: relative;
-    z-index: 1;
     background-color: #fff;
 }
 
